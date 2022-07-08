@@ -10,6 +10,7 @@ public class TicketManagerTest {
 
     TicketRepository repo = new TicketRepository();
     TicketManager manager = new TicketManager(repo);
+    TicketByPriceAscComparator comparator = new TicketByPriceAscComparator();
 
     Ticket ticket1 = new Ticket(1, 5000, "MOV", "EGO", 60);
     Ticket ticket2 = new Ticket(2, 6000, "MOV", "LED", 50);
@@ -37,7 +38,7 @@ public class TicketManagerTest {
     }
 
     @Test
-    public void shouldSearchTicketAndSort() {
+    public void shouldSearchTicketAndSortByPrice() {
 
         Ticket[] expected = { ticket8, ticket3, ticket1, ticket5, ticket6 };
         Ticket[] actual = manager.searchBy("MOV", "EGO");
@@ -46,7 +47,7 @@ public class TicketManagerTest {
     }
 
     @Test
-    public void shouldNotSearchWhenNotTicket() {
+    public void shouldNotSearchWhenNotTicketByPrice() {
 
         Ticket[] expected = { };
         Ticket[] actual = manager.searchBy("MOV", "SEV");
@@ -55,11 +56,39 @@ public class TicketManagerTest {
     }
 
     @Test
-    public void shouldSearch1Ticket() {
+    public void shouldSearch1TicketByPrice() {
 
         Ticket[] expected = { ticket10 };
         Ticket[] actual = manager.searchBy("MOV", "KUF");
 
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void shouldSearchTicketAndSortByTime() {
+
+        Ticket[] expected = { ticket5, ticket1, ticket6, ticket3, ticket8 };
+        Ticket[] actual = manager.findBySearch("MOV", "EGO", comparator);
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotSearchWhenNotTicket() {
+
+        Ticket[] expected = { };
+        Ticket[] actual = manager.findBySearch("MOV", "SEV", comparator);
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearch1TicketByTime() {
+
+        Ticket[] expected = { ticket10 };
+        Ticket[] actual = manager.findBySearch("MOV", "KUF", comparator);
+
+        assertArrayEquals(expected, actual);
+    }
+
 }
