@@ -1,6 +1,7 @@
 package ru.netology.domain;
 
 public class Ticket implements Comparable<Ticket> {
+    //интерфейс Comparable определяет порядок сортировки объектов данного класса по умолчанию
     private int id;
     private int price;  //стоимость билета
     private String departureAeroport; //аэпорорт вылета
